@@ -1,21 +1,42 @@
 # LEETCODE-Strings-3223
-class Solution {
-    public int minimumLength(String s) {
-        int n=s.length();
-        int result=0;
-        int [] freq=new int[26];
-        for(char ch:s.toCharArray())
-        {
-            freq[ch-'a']+=1;
-        }
-        for(int i=0;i<26;i++)
-        {
-            if(freq[i]==0) continue;
-            if(freq[i]%2==0) result+=2;
-            else{
-                result+=1;
-            }
-        }
-        return result;
-    }
-}
+### Example Input:
+```java
+String s = "abcabc";
+```
+
+### Step-by-Step Execution:
+
+1. **Initialization:**
+   - `n = s.length() = 6`.
+   - `result = 0`.
+   - `freq = new int[26]`, initialized to all zeros.
+
+2. **Frequency Calculation:**
+   For each character in `s`:
+   - 'a': `freq['a' - 'a'] = freq[0] += 1` → `freq[0] = 1`.
+   - 'b': `freq['b' - 'a'] = freq[1] += 1` → `freq[1] = 1`.
+   - 'c': `freq['c' - 'a'] = freq[2] += 1` → `freq[2] = 1`.
+   - 'a': `freq['a' - 'a'] = freq[0] += 1` → `freq[0] = 2`.
+   - 'b': `freq['b' - 'a'] = freq[1] += 1` → `freq[1] = 2`.
+   - 'c': `freq['c' - 'a'] = freq[2] += 1` → `freq[2] = 2`.
+
+   Final `freq` array (partial view for relevant indices):
+   ```
+   freq = [2, 2, 2, 0, 0, ..., 0]
+   ```
+
+3. **Result Calculation:**
+   For each index `i` from 0 to 25:
+   - `freq[i] == 0`: Skip (indices 3 to 25).
+   - For indices 0, 1, and 2:
+     - `freq[0] = 2` (even): `result += 2` → `result = 2`.
+     - `freq[1] = 2` (even): `result += 2` → `result = 4`.
+     - `freq[2] = 2` (even): `result += 2` → `result = 6`.
+
+4. **Return Value:**
+   - `result = 6`.
+
+### Observations:
+The function computes the sum of `freq[i]` while considering:
+- Adding 2 if the frequency is even.
+- Adding 1 if the frequency is odd.
